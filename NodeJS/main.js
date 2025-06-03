@@ -21,8 +21,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 // 1 day
   }
 }));
-
-const { MongoClient } = require('mongodb');
+const { MongoClient,ObjectId  } = require('mongodb');
 const MONGO_URI = 'mongodb://localhost:27017'; // Update if needed
 const DB_NAME = 'ChatByAlyaanSoh';
 
@@ -131,7 +130,9 @@ app.post('/api/signup', async (req,res) => {
 
 
 })
+
 app.post('/api/login_with_params', async (req, res) => {
+   
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password required.' });
@@ -142,8 +143,12 @@ app.post('/api/login_with_params', async (req, res) => {
         if( !user || user.password !== password) {
             return res.status(401).json({ message: 'Icorrect PAss' });
         }
+      
         if (user) {
-            req.session.userId = user._id;
+           
+            req.session.userId = user._id.toString();
+            console.log("User logged in with ID:", user._id);
+            console.log("User logged in with ID:", req.session.userId);
             res.json({ message: 'Login successful', loggedIn: true });
         } else {
             res.status(401).json({ message: 'Invalid credentials', loggedIn: false });
@@ -154,3 +159,26 @@ app.post('/api/login_with_params', async (req, res) => {
     }
 });
 
+app.get('/api/dashboard_login',async(req,res) => {
+
+    if( !req.session || !req.session.userId) {
+        console.log("Unauthorized access attempt");
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const userIdFromSession = req.session.userId.toString();
+    if (ObjectId.isValid(userIdFromSession)) {
+        const userId = new ObjectId(userIdFromSession);
+        try {
+        const user = await db.collection('users').findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ message: 'Login successful', user: { email: user.email, username: user.username } });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error' });
+        }
+    }
+   
+    
+});

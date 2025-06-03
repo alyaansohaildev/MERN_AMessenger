@@ -1,6 +1,6 @@
 'use client';
 import { useEffect,useState } from "react";
-import { CheckIfLoggedIn } from "@/utils/login_handle";
+import { CheckIfLoggedIn } from "../../utils_custom_rec/login_handle";
 import styles from './login.module.css';
 
 
@@ -10,7 +10,10 @@ export default function LoginPage() {
     useEffect(() => {
 
         CheckIfLoggedIn().then((loginResult) => {
-            console.log("Login Result: ", loginResult);
+            if(loginResult){
+                // User is logged in, redirect to dashboard
+                window.location.href = '/Dashboard';    
+            }
         });
         
     },[]);
@@ -56,7 +59,8 @@ export default function LoginPage() {
                     setSuccess('Signup successful!');
                     setError('');
                     setFormData({ email: '', password: '' });
-
+                    // Redirect to dashboard or home page
+                    window.location.href = '/Dashboard';
                 }
                 
             } else {

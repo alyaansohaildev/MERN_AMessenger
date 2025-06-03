@@ -17,20 +17,22 @@ export function LoginUser()
 }
 export async function CheckIfLoggedIn()
 {
-     await fetch('http://localhost:5000/api/login_check',{
+     const res = await fetch('http://localhost:5000/api/login_check',{
           credentials: 'include',
-            }).then(res => res.json())
-            .then(json => {
-                if(json['loggedIn'])
-                {
-                    console.log("User is logged in");
-                    return true;
-                }
-                else
-                {
-                    console.log("User is not logged in");
-                    return false;
-                }
-            })
+            });
+            
+            
+        const json = await res.json();  
+        if(json['loggedIn'])
+        {
+            console.log("User is logged in");
+            return true;
+        }
+        else
+        {
+            console.log("User is not logged in");
+            return false;
+        }
+            
             
 }

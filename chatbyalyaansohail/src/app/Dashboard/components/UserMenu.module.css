@@ -1,0 +1,20 @@
+.user_menu_main{
+    position: absolute;
+    display: flex;
+    flex-flow: column wrap;
+
+    top: 56px;
+    right: 8px;
+    background-color: rgb(40,40,40);
+   
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+    border-radius: 4px;
+}
+
+.div_line{
+    background-color: rgb(80,80,80);
+    height: 1px;
+}
+.user_menu_item{
+   padding: 0px 10px 10px 10px;
+}

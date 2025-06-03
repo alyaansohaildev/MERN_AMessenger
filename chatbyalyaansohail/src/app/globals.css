@@ -62,6 +62,21 @@ a {
 {
   padding: 16px;
 }
+
+.div_space_1x
+{
+  height: 6px;
+}
+button{
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+*{
+  color: rgb(245,245,245);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

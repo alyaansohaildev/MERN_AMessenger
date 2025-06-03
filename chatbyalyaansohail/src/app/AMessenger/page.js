@@ -1,6 +1,6 @@
 'use client';
 import { useEffect,useState } from "react";
-import {getCookie, CheckIfLoggedIn } from "../../utils/login_handle"
+import {getCookie, CheckIfLoggedIn } from "../../utils_custom_rec/login_handle"
 import styles from "./AMessenger.module.css";
 import Link from 'next/link';
 
